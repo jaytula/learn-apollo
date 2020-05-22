@@ -7,17 +7,16 @@ import ApolloClient, { gql } from "apollo-boost";
 const BACKEND = process.env.REACT_APP_BACKEND;
 
 function App() {
-  const graphqlBody = {
-    query: `
-    {
-      rates(currency: "USD") {
-          currency
-        }
-      }
-    `
-  };
-
   useEffect(() => {
+    const graphqlBody = {
+      query: `
+      {
+        rates(currency: "USD") {
+            currency
+          }
+        }
+      `
+    };
     fetch(`${BACKEND}/graphql`, {
       method: 'POST',
       headers: {
