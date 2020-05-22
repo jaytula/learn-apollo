@@ -12,3 +12,13 @@ services:
       - "3040:3000"
     command: "npm start"
     stdin_open: true
+
+  backend:
+    image: "node:12"
+    user: "node"
+    working_dir: /home/node/app
+    volumes:
+      - ./backend:/home/node/app
+    ports:
+      - "3041:3000"
+    command: "npm start"
