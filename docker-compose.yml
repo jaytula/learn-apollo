@@ -1,0 +1,14 @@
+version: '3.4'
+services:
+  frontend:
+    image: "node:12"
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./frontend:/home/node/app
+    ports:
+      - "3040:3000"
+    command: "npm start"
+    stdin_open: true
