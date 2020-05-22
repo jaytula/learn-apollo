@@ -11,6 +11,8 @@ services:
     ports:
       - "3040:3000"
     command: "npm start"
+    environment: 
+      - REACT_APP_BACKEND=http://localhost:3041
     stdin_open: true
 
   backend:

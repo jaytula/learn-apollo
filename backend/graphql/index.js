@@ -6,9 +6,11 @@ const commonSchema = require('./commonSchema');
 const allFiles = [
   ...fs
     .readdirSync(path.join(__dirname, 'queries'))
+    .filter(fileName => /\.js$/.test(fileName))
     .map(fileName => `./queries/${fileName}`),
   ...fs
     .readdirSync(path.join(__dirname, 'mutations'))
+    .filter(fileName => /\.js$/.test(fileName))
     .map(fileName => `./mutations/${fileName}`),
 ];
 
