@@ -6,6 +6,7 @@ const { typeDefs, resolvers } = require('./graphql');
 const PORT = process.env.PORT || 3000;
 const app = express();
 
+console.log('Allowed: ' + process.env.ALLOWED_ORIGIN)
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,

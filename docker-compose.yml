@@ -12,7 +12,7 @@ services:
       - "3040:3000"
     command: "npm start"
     environment: 
-      - REACT_APP_BACKEND=http://localhost:3041
+      REACT_APP_BACKEND: http://localhost:3041
     stdin_open: true
 
   backend:
@@ -23,4 +23,6 @@ services:
       - ./backend:/home/node/app
     ports:
       - "3041:3000"
+    environment: 
+      ALLOWED_ORIGIN: http://localhost:3040
     command: "npm start"
