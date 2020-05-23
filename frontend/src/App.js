@@ -8,44 +8,41 @@ const BACKEND = process.env.REACT_APP_BACKEND;
 
 function App() {
   useEffect(() => {
-    const graphqlBody = {
-      query: `
-      {
-        rates(currency: "USD") {
-            currency
-          }
-        }
-      `
-    };
-    fetch(`${BACKEND}/graphql`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(graphqlBody)
-    }).then(res => res.json())
-    .then(data => console.log(data))
-    // const client = new ApolloClient({
-    //   uri: BACKEND,
-    //   fetchOptions: {
-    //     cors: true
-    //   }
-    // });
-
-    // client
-    //   .query({
-    //     query: gql`
-    //       {
-    //         rates(currency: "USD") {
-    //           currency
-    //         }
+    // const graphqlBody = {
+    //   query: `
+    //   {
+    //     rates(currency: "USD") {
+    //         currency
     //       }
-    //     `,
-    //   })
-    //   .then((result) => console.log(result))
-    //   .catch(err => {
-    //     console.log(err);
-    //   })
+    //     }
+    //   `
+    // };
+    // fetch(`${BACKEND}/graphql`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(graphqlBody)
+    // }).then(res => res.json())
+    // .then(data => console.log(data))
+    const client = new ApolloClient({
+      uri: `${BACKEND}/graphql`,
+    });
+
+    client
+      .query({
+        query: gql`
+          {
+            rates(currency: "USD") {
+              currency
+            }
+          }
+        `,
+      })
+      .then((result) => console.log(result))
+      .catch(err => {
+        console.log(err);
+      })
   }, []);
 
   return (
