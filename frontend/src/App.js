@@ -1,32 +1,21 @@
 import React from 'react';
+import classes from './App.module.css';
 
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-
-const EXCHANGE_RATES = gql`
-  {
-    rates(currency: "USD") {
-      currency
-      rate
-    }
-  }
-`;
+import { Link, Route, Switch } from 'react-router-dom';
+import Rates from './components/Rates/Rates';
 
 function App() {
-  const { loading, error, data } = useQuery(EXCHANGE_RATES);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-
   return (
     <div>
-        <ul>
-          {data.rates.map((rate) => (
-            <li key={rate.currency}>
-              {rate.currency}: {rate.rate}
-            </li>
-          ))}
-        </ul>
+      <div className={classes.Links}>
+        <Link to='/rates'>Rates</Link>
+        <Link to='/dogs'>Dogs</Link>
+      </div>
+      <Switch>
+        <Route path='/rates' component={Rates} />
+      </Switch>
     </div>
   );
 }

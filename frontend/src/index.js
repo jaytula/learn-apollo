@@ -3,26 +3,28 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {ApolloClient} from 'apollo-boost';
+import { ApolloClient } from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
-import {InMemoryCache} from 'apollo-cache-inmemory';
-import {HttpLink} from 'apollo-link-http';
-
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { HttpLink } from 'apollo-link-http';
+import { BrowserRouter } from 'react-router-dom';
 const BACKEND = process.env.REACT_APP_BACKEND;
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
-  uri: `${BACKEND}/graphql`
-})
+  uri: `${BACKEND}/graphql`,
+});
 const client = new ApolloClient({
   cache,
-  link
+  link,
 });
 
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
