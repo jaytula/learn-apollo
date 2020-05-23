@@ -1,65 +1,48 @@
-import React, { useEffect } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
 
-import ApolloClient, { gql } from "apollo-boost";
+import { useQuery } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
 
-const BACKEND = process.env.REACT_APP_BACKEND;
+const EXCHANGE_RATES = gql`
+  {
+    rates(currency: "USD") {
+      currency
+      rate
+    }
+  }
+`;
 
 function App() {
-  useEffect(() => {
-    // const graphqlBody = {
-    //   query: `
-    //   {
-    //     rates(currency: "USD") {
-    //         currency
-    //       }
-    //     }
-    //   `
-    // };
-    // fetch(`${BACKEND}/graphql`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(graphqlBody)
-    // }).then(res => res.json())
-    // .then(data => console.log(data))
-    const client = new ApolloClient({
-      uri: `${BACKEND}/graphql`,
-    });
+  const { loading, error, data } = useQuery(EXCHANGE_RATES);
 
-    client
-      .query({
-        query: gql`
-          {
-            rates(currency: "USD") {
-              currency
-            }
-          }
-        `,
-      })
-      .then((result) => console.log(result))
-      .catch(err => {
-        console.log(err);
-      })
-  }, []);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
 
+  console.log(data);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <div className='App'>
+      <header className='App-header'>
+        <img src={logo} className='App-logo' alt='logo' />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+          className='App-link'
+          href='https://reactjs.org'
+          target='_blank'
+          rel='noopener noreferrer'
         >
           Learn React
         </a>
+        <ul>
+          {data.rates.map((rate) => (
+            <li key={rate.currency}>
+              {rate.currency}: {rate.rate}
+            </li>
+          ))}
+        </ul>
       </header>
     </div>
   );
