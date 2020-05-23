@@ -1,10 +1,9 @@
 import React from 'react';
 import classes from './App.module.css';
 
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
 import { Link, Route, Switch } from 'react-router-dom';
 import Rates from './components/Rates/Rates';
+import Dogs from './components/Dogs/Dogs';
 
 function App() {
   return (
@@ -15,6 +14,8 @@ function App() {
       </div>
       <Switch>
         <Route path='/rates' component={Rates} />
+        <Route path='/dogs' component={Dogs} />
+
       </Switch>
     </div>
   );
