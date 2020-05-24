@@ -14,8 +14,9 @@ const GET_DOG_PHOTO = gql`
 
 const DogPhoto = () => {
   const { breed } = useParams();
-  const { loading, error, data } = useQuery(GET_DOG_PHOTO, {
+  const { loading, error, data, refetch } = useQuery(GET_DOG_PHOTO, {
     variables: { breed },
+    // pollInterval: 500
   });
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
@@ -24,9 +25,10 @@ const DogPhoto = () => {
     <div>
       <h2>{breed} ({data.dog.id})</h2>
       <p>
-        <img style={{width: 280}}
+        <img style={{width: 280}} alt={breed}
           src={`${process.env.REACT_APP_BACKEND}/assets/${data.dog.displayImage}`}
         />
+        <button onClick={() => refetch()}>Refetch!</button>
       </p>
     </div>
   );
