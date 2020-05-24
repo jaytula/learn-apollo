@@ -8,4 +8,10 @@ module.exports = gql`
   type Mutation {
     _empty: String
   }
+
+  type Dog {
+    id: Int!
+    breed: String!
+    displayImage: String!
+  }
 `;
