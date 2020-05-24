@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const { ApolloServer } = require('apollo-server-express');
 const { typeDefs, resolvers } = require('./graphql');
 
@@ -22,6 +23,8 @@ apolloServer.applyMiddleware({
     credentials: true,
   },
 });
+
+app.use('/assets', express.static(path.join(__dirname, 'assets')))
 
 app.get('/', (req, res) => {
   res.send('Hello World!');

@@ -4,6 +4,7 @@ import classes from './App.module.css';
 import { Link, Route, Switch } from 'react-router-dom';
 import Rates from './components/Rates/Rates';
 import Dogs from './components/Dogs/Dogs';
+import DogPhoto from './components/DogPhoto/DogPhoto';
 
 function App() {
   return (
@@ -14,8 +15,8 @@ function App() {
       </div>
       <Switch>
         <Route path='/rates' component={Rates} />
+        <Route path="/dog-photo/:breed" component={DogPhoto} />
         <Route path='/dogs' component={Dogs} />
-
       </Switch>
     </div>
   );
