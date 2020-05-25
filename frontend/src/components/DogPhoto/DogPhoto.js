@@ -14,18 +14,27 @@ const GET_DOG_PHOTO = gql`
 
 const DogPhoto = () => {
   const { breed } = useParams();
-  const { loading, error, data, refetch } = useQuery(GET_DOG_PHOTO, {
-    variables: { breed },
-    // pollInterval: 500
-  });
+  const { loading, error, data, refetch, networkStatus } = useQuery(
+    GET_DOG_PHOTO,
+    {
+      variables: { breed },
+      //pollInterval: 500,
+      notifyOnNetworkStatusChange: true,
+    }
+  );
+  if (networkStatus === 4) return <p>Refetching!</p>;
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
   return (
     <div>
-      <h2>{breed} ({data.dog.id})</h2>
+      <h2>
+        {breed} ({data.dog.id})
+      </h2>
       <p>
-        <img style={{width: 280}} alt={breed}
+        <img
+          style={{ width: 280 }}
+          alt={breed}
           src={`${process.env.REACT_APP_BACKEND}/assets/${data.dog.displayImage}`}
         />
         <button onClick={() => refetch()}>Refetch!</button>
