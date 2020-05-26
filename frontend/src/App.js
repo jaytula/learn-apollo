@@ -6,6 +6,7 @@ import Rates from './components/Rates/Rates';
 import Dogs from './components/Dogs/Dogs';
 import DogPhoto from './components/DogPhoto/DogPhoto';
 import DelayedQuery from './components/DelayedQuery/DelayedQuery';
+import AddTodo from './components/AddTodo/AddTodo';
 
 function App() {
   return (
@@ -14,12 +15,14 @@ function App() {
         <Link to='/rates'>Rates</Link>
         <Link to='/dogs'>Dogs</Link>
         <Link to="/delayed-query">Delayed Query</Link>
+        <Link to="/add-todo">Add Todo</Link>
       </div>
       <Switch>
         <Route path='/rates' component={Rates} />
         <Route path="/dog-photo/:breed" component={DogPhoto} />
         <Route path='/dogs' component={Dogs} />
         <Route path='/delayed-query' component={DelayedQuery} />
+        <Route path='/add-todo' component={AddTodo} />
       </Switch>
     </div>
   );
