@@ -14,4 +14,9 @@ module.exports = gql`
     breed: String!
     displayImage: String!
   }
+
+  type Todo {
+		id: String!
+		type: String!
+	}
 `;

@@ -1,3 +1,5 @@
+const LRU = require('lru-cache');
+
 module.exports = {
   dogs: [
     {
@@ -10,4 +12,5 @@ module.exports = {
     { id: 4, breed: 'french bulldog', displayImage: 'french-bulldog.png' },
     { id: 5, breed: 'bulldog', displayImage: 'bulldog.png' },
   ],
+  lruCache: new LRU({ max: 50, maxAge: 1000 * 60 * 60 }),
 };
