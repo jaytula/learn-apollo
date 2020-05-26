@@ -9,7 +9,7 @@ exports.typeDefs = gql`
 
 exports.resolvers = {
   Mutation: {
-    updateTodo: (_, { type}) => {
+    updateTodo: (_, { id, type}) => {
       const todo = { type, id };
       lruCache.set(id, type);
       return todo;
