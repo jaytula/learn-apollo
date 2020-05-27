@@ -30,7 +30,7 @@ const TODOS = gql`
 `;
 
 const Todos = () => {
-  const { loading, error, data } = useQuery(TODOS);
+  const { loading: queryLoading, error: queryError, data } = useQuery(TODOS);
   const [addTodo] = useMutation(ADD_TODO, {
     update(cache, { data }) {
       const readData = cache.readQuery({ query: TODOS });
@@ -40,10 +40,15 @@ const Todos = () => {
       });
     },
   });
-  const [updateTodo] = useMutation(UPDATE_TODO);
+  const [
+    updateTodo,
+    { loading: updateLoading, error: updateError },
+  ] = useMutation(UPDATE_TODO);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (queryLoading) return <p>Loading...</p>;
+  if (updateLoading) return <p>Update Mutation...</p>;
+  if (queryError) return <p>Error :(</p>;
+  if (updateError) return <p>Update Error</p>;
   let input;
 
   return (
@@ -63,18 +68,23 @@ const Todos = () => {
         <button type='submit'>Add Todo</button>
       </form>
 
+      <div>{updateError ? JSON.stringify(updateError) : null}</div>
       <ul>
         {data.todos.map((todo) => {
           let input;
 
           const updateTodoHandler = (todoId, value) => {
             console.log({ todoId, value });
-            updateTodo({
-              variables: {
-                id: todoId,
-                type: value,
-              },
-            });
+            try {
+              updateTodo({
+                variables: {
+                  id: todoId,
+                  type: value,
+                },
+              });
+            } catch (err) {
+              console.log(err);
+            }
           };
 
           return (
