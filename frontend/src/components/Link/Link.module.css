@@ -1,0 +1,7 @@
+.Link {
+  color: red;
+}
+
+.Link.Active {
+  color: green;
+}

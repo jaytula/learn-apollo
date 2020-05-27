@@ -7,6 +7,7 @@ import Dogs from './components/Dogs/Dogs';
 import DogPhoto from './components/DogPhoto/DogPhoto';
 import DelayedQuery from './components/DelayedQuery/DelayedQuery';
 import Todos from './components/Todos/Todos';
+import FilterLinkExamples from './components/FilterLinkExamples/FilterLinkExamples';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Link to='/dogs'>Dogs</Link>
         <Link to="/delayed-query">Delayed Query</Link>
         <Link to="/todos">Todos</Link>
+        <Link to="/filterlink-examples">FilterLink Examples</Link>
       </div>
       <Switch>
         <Route path='/rates' component={Rates} />
@@ -23,6 +25,7 @@ function App() {
         <Route path='/dogs' component={Dogs} />
         <Route path='/delayed-query' component={DelayedQuery} />
         <Route path='/todos' component={Todos} />
+        <Route path="/filterlink-examples" component={FilterLinkExamples} />
       </Switch>
     </div>
   );
