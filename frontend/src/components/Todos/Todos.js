@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { gql } from 'apollo-boost';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 
@@ -31,26 +31,32 @@ const TODOS = gql`
 
 const Todos = () => {
   const { loading, error, data } = useQuery(TODOS);
-  const [addTodo] = useMutation(ADD_TODO);
+  const [addTodo] = useMutation(ADD_TODO, {
+    update(cache, { data }) {
+      const readData = cache.readQuery({ query: TODOS });
+      cache.writeQuery({
+        query: TODOS,
+        data: { todos: readData.todos.concat(data.addTodo) },
+      });
+    },
+  });
   const [updateTodo] = useMutation(UPDATE_TODO);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
   let input;
 
-
-
   return (
     <div>
       <form
-        onSubmit={event => {
+        onSubmit={(event) => {
           event.preventDefault();
           addTodo({ variables: { type: input.value } });
           input.value = '';
         }}
       >
         <input
-          ref={node => {
+          ref={(node) => {
             input = node;
           }}
         />
@@ -58,26 +64,29 @@ const Todos = () => {
       </form>
 
       <ul>
-        {data.todos.map(todo => {
+        {data.todos.map((todo) => {
           let input;
 
           const updateTodoHandler = (todoId, value) => {
             console.log({ todoId, value });
-            updateTodo({variables: {
-              id: todoId,
-              type: value
-            }})
+            updateTodo({
+              variables: {
+                id: todoId,
+                type: value,
+              },
+            });
           };
 
           return (
             <li key={todo.id}>
               {todo.id}: {todo.type}
-              <form onSubmit={event => {event.preventDefault(); updateTodoHandler(todo.id, input.value)}}>
-                <input
-                  type='text'
-                  name='type'
-                  ref={node => input = node}
-                />
+              <form
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  updateTodoHandler(todo.id, input.value);
+                }}
+              >
+                <input type='text' name='type' ref={(node) => (input = node)} />
                 <button type='submit'>Update</button>
               </form>
             </li>
