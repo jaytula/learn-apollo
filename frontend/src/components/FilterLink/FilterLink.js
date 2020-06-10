@@ -1,5 +1,5 @@
 import React from 'react';
-import { useApolloClient, useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import Link from '../Link/Link';
 import { gql } from 'apollo-boost';
 
