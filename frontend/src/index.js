@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { ApolloClient } from 'apollo-boost';
+import { ApolloClient, gql } from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
@@ -17,6 +17,24 @@ const link = new HttpLink({
 const client = new ApolloClient({
   cache,
   link,
+  resolvers: {
+    Mutation: {
+      toggleTodo: (_root, variables, { cache, getCacheKey }) => {
+        const id = getCacheKey({ __typename: 'Todo', id: variables.id });
+        const fragment = gql`
+          fragment completeTodo on Todo {
+            completed
+          }
+        `;
+
+        const todo = cache.readFragment({ fragment, id });
+        const data = { ...todo, completed: !todo.completed };
+        cache.writeData({ id, data });
+
+        return null;
+      },
+    },
+  },
 });
 
 ReactDOM.render(
